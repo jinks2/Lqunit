@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>test</title>
+	<link rel="stylesheet" type="text/css" href="../js/lib/qunit-1.15.0.css">
+</head>
+<body>
+<h1 id="qunit-header">QUnit</h1>
+<h2 id="qunit-banner"></h2>
+<div id="qunit-testrunner-toolbar"></div>
+<h2 id="qunit-userAgent"></h2>
+<ol id="qunit-tests"></ol>
+<div id="qunit-fixture">test</div>
+<script src="http://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="../js/lib/qunit-1.15.0.js"></script>
+<script>
+   test("async", function() {  //async test;
+        stop();   //stop;
+        $.getJSON("json.php", function(result) {
+            deepEqual(result, {  //deepEqual different with equal;
+                status: "ok"
+            });
+            start();  //use start when callback;
+        });
+    });
+
+    asyncTest("async2", function() { //use asyncTest can remove stop();
+        $.getJSON("json.php", function(result) {
+            deepEqual(result, {
+                status: "ok"
+            });
+            start();
+        });
+    });
+    asyncTest("async3", function() {
+        expect(1); //define test for callback time;
+        $.getJSON("json.php", function(result) {
+            deepEqual(result, {
+                status: "ok"
+            });
+            start();
+        });
+    });
+    asyncTest("async4", 1, function() { //set expect here;
+        $.getJSON("json.php", function(result) {
+            deepEqual(result, {
+                status: "ok"
+            });
+            start();
+        });
+    });
+	test("async semaphore", function() {
+        stop();  //more and radom callback
+        stop();
+        $.getJSON("json.php", function(result) {
+            equal(result.status, "ok");
+            start();
+        });
+        $.getJSON("json.php", function(result) {
+            equal(result.status, "ok");
+            start();
+        });
+    });
+</script>
+</body>
+</html>

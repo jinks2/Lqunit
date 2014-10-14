@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>test</title>
+	<link rel="stylesheet" type="text/css" href="../js/lib/qunit-1.15.0.css">
+</head>
+<body>
+<h1 id="qunit-header">QUnit</h1>
+<h2 id="qunit-banner"></h2>
+<div id="qunit-testrunner-toolbar"></div>
+<h2 id="qunit-userAgent"></h2>
+<ol id="qunit-tests"></ol>
+<div id="qunit-fixture">test</div>
+<script type="text/javascript" src="../js/lib/qunit-1.15.0.js"></script>
+<script>
+
+test("throws", function() { //throws:pass error,else fail;
+        function CustomError() {}
+        throws(function() {
+            throw new CustomError();
+        }, CustomError, "must throw error to pass");
+    });
+
+
+
+</script>
+</body>
+</html>
