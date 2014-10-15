@@ -13,21 +13,57 @@
 <div id="qunit-fixture">test</div>
 <script type="text/javascript" src="../js/lib/qunit-1.15.0.js"></script>
 <script type="text/javascript">
-	function format(string, values) {
-	    for (var key in values) {
-	        string = string.replace(new RegExp("\{" + key + "}"), values[key]);
-	    }
-	    return string;
-	}
-	 
-	test("basics", function() {
-	    var values = {
-	        name: "World"
-	    };
-	    equal( format("Hello, {name}", values), "Hello, World", "single match" );  //qual test
-	    equal( format("Hello, {name}, how is {name} today?", values),  //not add global sign
-	        "Hello, World, how is World today?", "more match" );  
-	});
+	/*basical format */
+ QUnit.test( "a basic test example"/*name*/, function( assert ) {
+      var value = "hello";
+      assert.equal( value, "hello", "We expect value to be hello"/*pass message*/ );
+    });
+
+
+/*use ok*/
+QUnit.test( "ok test", function( assert ) {
+  assert.ok( true, "true succeeds" );
+  assert.ok( "non-empty", "non-empty string succeeds" );
+  assert.ok( false, "false fails" );
+  assert.ok( 0, "0 fails" );
+  assert.ok( NaN, "NaN fails" );
+  assert.ok( "", "empty string fails" );
+  assert.ok( null, "null fails" );
+  assert.ok( undefined, "undefined fails" );
+});
+
+
+/*use equal: '=='*/
+QUnit.test("equal test", function(assert) {
+	assert.equal( "", "", "Empty, Empty; equal succeeds" );
+  assert.equal( "", 0, "Empty, Zero; equal succeeds" );
+  assert.deepEqual( {}, {}, "Empty object,Empty object; equal succeeds");
+});
+
+
+/*use deepEqual: '===',but not object (In general, deepEqual() is the better choice.)*/
+QUnit.test("deepEqual test", function(assert) {
+  assert.deepEqual("","","Empty, Empty; deepEqual succeeds");
+  assert.deepEqual( "", 0, "Empty, Zero; deepEqual fails" );
+  assert.deepEqual( {}, {}, "Empty object,Empty object; deepEqual succeeds");
+});
+
+/*use strictEqual: '==='*/
+QUnit.test("strictEqual test", function(assert) {
+  assert.strictEqual("","","Empty, Empty; strictEqual succeeds");
+  assert.strictEqual( "", 0, "Empty, Zero; strictEqual fails" );
+  assert.strictEqual( {}, {}, "Empty object,Empty object; strictEqual fails" );
+});
+
+/*
+ *opposite:
+ *
+ *notEqual, notDeepEqual, notStrictEqual
+ */
+
+
+
+
 </script>
 </body>
 </html>

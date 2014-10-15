@@ -11,15 +11,45 @@
 <h2 id="qunit-userAgent"></h2>
 <ol id="qunit-tests"></ol>
 <div id="qunit-fixture">test</div>
+<script src="http://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
 <script type="text/javascript" src="../js/lib/qunit-1.15.0.js"></script>
 <script>
 
-test("throws", function() { //throws:pass error,else fail;
-        function CustomError() {}
-        throws(function() {
-            throw new CustomError();
-        }, CustomError, "must throw error to pass");
-    });
+/*Grouping Tests*/
+//module()
+QUnit.module( "group a" );
+QUnit.test( "a basic test example", function( assert ) {
+  assert.ok( true, "this test is fine" );
+});
+QUnit.test( "a basic test example 2", function( assert ) {
+  assert.ok( true, "this test is fine" );
+});
+ 
+QUnit.module( "group b" );
+QUnit.test( "a basic test example 3", function( assert ) {
+  assert.ok( true, "this test is fine" );
+});
+QUnit.test( "a basic test example 4", function( assert ) {
+  assert.ok( true, "this test is fine" );
+});
+
+
+QUnit.module( "module", {
+  setup: function( assert ) {
+    assert.ok( true, "one extra assert per test" );
+  }, 
+  teardown: function( assert ) {
+    assert.ok( true, "and one extra assert after each test" );
+  }
+});
+// module run before and after each test within the module
+QUnit.test( "test with setup and teardown", function() {
+  expect( 2 );
+});
+
+QUnit.test( "test with setup and teardown again", function() {
+  expect( 2 );
+});
 
 
 

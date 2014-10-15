@@ -14,53 +14,48 @@
 <script src="http://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
 <script type="text/javascript" src="../js/lib/qunit-1.15.0.js"></script>
 <script>
-   test("async", function() {  //async test;
-        stop();   //stop;
-        $.getJSON("json.php", function(result) {
-            deepEqual(result, {  //deepEqual different with equal;
-                status: "ok"
-            });
-            start();  //use start when callback;
-        });
+/*Testing User Actions*/
+//test with events;
+function keyLogger(target) {
+    if(!(this instanceof keyLogger)) {
+        return new keyLogger(target);
+    };
+    this.target = target;
+    this.log = [];
+    var self = this;
+    this.target.off("keydown").on("keydown", function(event) {
+        self.log.push(event.keyCode);
     });
+}
 
-    asyncTest("async2", function() { //use asyncTest can remove stop();
-        $.getJSON("json.php", function(result) {
-            deepEqual(result, {
-                status: "ok"
-            });
-            start();
-        });
-    });
-    asyncTest("async3", function() {
-        expect(1); //define test for callback time;
-        $.getJSON("json.php", function(result) {
-            deepEqual(result, {
-                status: "ok"
-            });
-            start();
-        });
-    });
-    asyncTest("async4", 1, function() { //set expect here;
-        $.getJSON("json.php", function(result) {
-            deepEqual(result, {
-                status: "ok"
-            });
-            start();
-        });
-    });
-	test("async semaphore", function() {
-        stop();  //more and radom callback
-        stop();
-        $.getJSON("json.php", function(result) {
-            equal(result.status, "ok");
-            start();
-        });
-        $.getJSON("json.php", function(result) {
-            equal(result.status, "ok");
-            start();
-        });
-    });
+QUnit.test("keylogger api behavior", function(assert) {
+    var event,
+        $doc = $(document),
+        keys = keyLogger($doc);
+
+    //trigger event
+    event = $.Event("keydown");  //keydown event;
+    event.keyCode = 9;
+    $doc.trigger(event);//can use triggerHandler() insteadof trigger;
+
+
+    //verify expected behavior
+    assert.equal(keys.log.length,1,"a key was logged");
+    assert.equal(keys.log[0],9,"correct key was logged");    
+});
+
+
+
+/*Keeping Tests Atomic*/
+//test dom;
+QUnit.test("2 assert", function(assert) {
+    var $fixture = $("#qunit-fixture");
+    $fixture.append("<div>hello!</div>");
+    assert.equal($("div",$fixture).length,1,"div added successfully!");
+    $fixture.append("<span>hello!</span>");
+    assert.equal($("span",$fixture).length,1,"span added successfully!");
+});
+
 </script>
 </body>
 </html>
