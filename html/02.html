@@ -17,8 +17,8 @@
 <script type="text/javascript">
 
 //Synchronous Callbacks
-//expect();
-QUnit.test("a test", function(assert) {
+//expect(); can set this in the secend param;
+QUnit.test("expect test", function(assert) {
     expect(2);  //assert run two times;
     function calc(x, operation) {
         return operation(x);
@@ -30,8 +30,7 @@ QUnit.test("a test", function(assert) {
     assert.equal(result,4,"2 square equal 4");
 });
 
-QUnit.test("a test", function(assert) {
-    expect(1); //when click the body will fail;
+QUnit.test("a test",1, function(assert) {
     var $body = $("body");
     $body.on("click",function() {
         assert.ok(true,"body was clicked!");
@@ -39,6 +38,7 @@ QUnit.test("a test", function(assert) {
     $body.trigger("click");
 });
 
+//pay attation:now here is a problem;
 
   /*Asynchronous Callbacks*/
   //use asyncTest insteadof test;

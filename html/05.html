@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>test</title>
+	<link rel="stylesheet" type="text/css" href="../js/lib/qunit-1.15.0.css">
+</head>
+<body>
+<h1 id="qunit-header">QUnit</h1>
+<h2 id="qunit-banner"></h2>
+<div id="qunit-testrunner-toolbar"></div>
+<h2 id="qunit-userAgent"></h2>
+<ol id="qunit-tests"></ol>
+<div id="qunit-fixture">test</div>
+<script src="http://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="../js/lib/qunit-1.15.0.js"></script>
+<script>
+/*Custom Assertions*/
+QUnit.test( "retrieving object keys", function( assert ) {
+  var objectKeys =  Object.keys({ a: 1, b: 2 }) ;
+  assert.ok( objectKeys.indexOf("a") > -1, "Object keys" );
+  assert.ok( objectKeys.indexOf("b") > -1, "Object keys" );
+  var arrayKeys = Object.keys([1, 2]) ;
+  assert.ok( arrayKeys.indexOf("1") > -1, "Array keys" );
+  assert.ok( arrayKeys.indexOf("2") > -1, "Array keys" );
+});
+
+
+// make test suites more readable and more maintainable
+QUnit.assert.contains = function( needle, haystack, message ) {
+  var actual = haystack.indexOf(needle) > -1;
+  QUnit.push(actual, actual, needle, message);
+};
+QUnit.test("retrieving object keys", function( assert ) {
+  var objectKeys = Object.keys({ a: 1, b: 2 }) ;
+  assert.contains( "a", objectKeys, "Object keys" );
+  assert.contains( "b", objectKeys, "Object keys" );
+ 
+  var arrayKeys = Object.keys( [1, 2] );
+  assert.contains( "1", arrayKeys, "Array keys" );
+  assert.contains( "2", arrayKeys, "Array keys" );
+});
+</script>
+</body>
+</html>
